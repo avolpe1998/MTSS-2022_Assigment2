@@ -2,6 +2,8 @@ package it.unipd.mtss.model;
 
 import static org.junit.Assert.assertEquals;
 
+import java.time.DateTimeException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,27 +18,43 @@ public class UserTest {
     }
 
     @Test
-    public void getId(){
+    public void testGetId(){
         assertEquals(1, user1.getId());    
     }
 
     @Test
-    public void getName(){
+    public void testGetName(){
         assertEquals("Mario", user1.getName());
     }
 
     @Test
-    public void getSurname(){
+    public void testGetSurname(){
         assertEquals("Rossi", user1.getSurname());
     }
 
     @Test
-    public void getBirthDate(){
+    public void testGetBirthDate(){
         assertEquals("1990-05-01", user1.getBirthDate());
     }
 
-    @Test public void getAge(){
+    @Test
+    public void testGetAge(){
         assertEquals(32, user1.getAge());
         assertEquals(37, user2.getAge());
+    }
+
+    @Test(expected = DateTimeException.class)
+    public void testWrongBirthDateFormat(){
+        new User(1, "Luigi", "Bianchi", "198a5-05-01");
+    }
+
+    @Test(expected = DateTimeException.class)
+    public void testEmptyBirthDateFormat(){
+        new User(1, "Luigi", "Bianchi", "");
+    }
+
+    @Test(expected = DateTimeException.class)
+    public void testBirthDateEuropeFormat(){
+        new User(1, "Luigi", "Bianchi", "01-05-1985");
     }
 }
