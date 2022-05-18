@@ -3,7 +3,7 @@
 "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
 <module name="Checker">
   <module name="RegexpHeader">
-    <property name="headerFile" value="config/java.header"/>
+    <property name="header" value="^/{68}$\n^/{2}[ ]{1}Andrea Volpe 2021904$\n^/{2}[ ]{1}Riccardo Contin 1225416$\n^/{68}$"/>
   </module>
   <module name="FileLength" />
   <module name="LineLength" />
