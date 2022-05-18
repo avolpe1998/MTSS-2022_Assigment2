@@ -14,7 +14,8 @@ public class User {
     private String surname;
     private String birthDate;
 
-    User(int id, String name, String surname, String birthDate) throws DateTimeException {
+    User(int id, String name, String surname, String birthDate) 
+        throws DateTimeException {
         this.id = id;
         this.name = name;
         this.surname = surname;
