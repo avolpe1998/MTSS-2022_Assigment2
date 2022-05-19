@@ -20,7 +20,7 @@ jobs:
       run: mvn -B package --file e-shop-manager/pom.xml
       
     - name: Generate site
-      run: cd e-shop-manager && mvn jacoco:prepare-agent install jacoco:report
+      run: cd e-shop-manager && mvn test jacoco:report
 
     #- name: Generate JaCoCo Badge
     #  id: jacoco
@@ -47,10 +47,10 @@ jobs:
     #    name: jacoco-report
     #    path: e-shop-manager/target/site/jacoco/
 
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
+    #- name: Coveralls
+    #  uses: coverallsapp/github-action@master
+    #  with:
+    #    github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
     
     - name: Coveralls Coverage Report Submission
       run: cd e-shop-manager && mvn coveralls:report --define repoToken=${{ secrets.COVERALLS_REPO_TOKEN }}
