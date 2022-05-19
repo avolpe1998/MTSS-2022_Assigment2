@@ -6,4 +6,4 @@
 
 ![Branches](.github/badges/branches.svg)
 
-[![Coverage Status](https://coveralls.io/repos/github/avolpe1998/MTSS-2022_Assigment2/badge.svg?branch=main)](https://coveralls.io/github/avolpe1998/MTSS-2022_Assigment2?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/avolpe1998/MTSS-2022_Assigment2/badge.svg)](https://coveralls.io/github/avolpe1998/MTSS-2022_Assigment2)
