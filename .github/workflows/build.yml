@@ -48,8 +48,11 @@ jobs:
         path: e-shop-manager/target/site/jacoco/
         
     - name: Generate site Checkstyle
-      run: cd e-shop-manager && mvn -B checkstyle:checkstyle
-    - uses: jwgmeligmeyling/checkstyle-github-action@master
+      run: cd e-shop-manager && mvn clean && mvn -B checkstyle:checkstyle
+    - uses: actions/upload-artifact@v2
       with:
-        path: '**/checkstyle-result.xml'
+        name: checkstyle-report
+        path: e-shop-manager/target/site/
+        
+      
         
