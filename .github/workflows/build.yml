@@ -20,7 +20,7 @@ jobs:
       run: mvn -B package --file e-shop-manager/pom.xml
       
     - name: Generate site
-      run: cd e-shop-manager && mvn jacoco:prepare-agent install jacoco:report
+      run: cd e-shop-manager && mvn jacoco:prepare-agent install jacoco:report && mvn -B checkstyle:checkstyle
 
     - name: Generate JaCoCo Badge
       id: jacoco
