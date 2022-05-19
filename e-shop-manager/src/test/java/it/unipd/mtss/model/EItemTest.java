@@ -12,7 +12,7 @@ public class EItemTest {
 
     @Test
     public void testGetItemType(){
-        EItem item = new EItem(EItemType.Processor, "Processore1", 15.0);
+        EItem item = new EItem(EItemType.Processor, "Processore1", 150.50);
 
         EItemType itemType = item.getItemType();
 
@@ -21,7 +21,7 @@ public class EItemTest {
 
     @Test
     public void testGetName(){
-        EItem item = new EItem(EItemType.Processor, "Processore1", 15.0);
+        EItem item = new EItem(EItemType.Processor, "Processore1", 150.50);
 
         String name = item.getName();
 
@@ -30,10 +30,10 @@ public class EItemTest {
 
     @Test
     public void testGetPrice(){
-        EItem item = new EItem(EItemType.Processor, "Processore1", 15.0);
+        EItem item = new EItem(EItemType.Processor, "Processore1", 150.50);
 
         double price = item.getPrice();
 
-        assertEquals(15, price,0);
+        assertEquals(150.50, price, 0);
     }
 }
