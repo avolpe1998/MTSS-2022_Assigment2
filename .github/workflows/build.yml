@@ -19,7 +19,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file e-shop-manager/pom.xml
       
-    - name: Generate site
+    - name: Generate site JaCoCo
       run: cd e-shop-manager && mvn jacoco:prepare-agent install jacoco:report
 
     - name: Generate JaCoCo Badge
@@ -46,4 +46,13 @@ jobs:
       with:
         name: jacoco-report
         path: e-shop-manager/target/site/jacoco/
+        
+    - name: Generate site Checkstyle
+      run: cd e-shop-manager && mvn clean && mvn -B checkstyle:checkstyle
+    - uses: actions/upload-artifact@v2
+      with:
+        name: checkstyle-report
+        path: e-shop-manager/target/site/
+        
+      
         
