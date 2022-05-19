@@ -48,5 +48,5 @@ jobs:
     #    path: e-shop-manager/target/site/jacoco/
     
     - name: Coveralls Coverage Report Submission
-      run: mvn coveralls:report --define repoToken=${{ secrets.COVERALLS_REPO_TOKEN }}
+      run: cd e-shop-manager && mvn coveralls:report --define repoToken=${{ secrets.COVERALLS_REPO_TOKEN }}
         
