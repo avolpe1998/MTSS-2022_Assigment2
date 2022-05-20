@@ -49,4 +49,29 @@ public class BillImplTest {
 
         EItem cheaperEItem = BillImpl.lessExpensiveEItem(items, EItemType.Mouse);     
     }
+
+    @Test
+    public void testGetTotal(){
+        List<EItem> items = new ArrayList<EItem>(List.of( 
+            new EItem(EItemType.Processor, "Processore1", 14.50),
+            new EItem(EItemType.Motherboard, "Scheda1", 12.50),
+            new EItem(EItemType.Processor, "Processore2", 10.50),
+            new EItem(EItemType.Processor, "Processore3", 6.50),
+            new EItem(EItemType.Keyboard, "Tastiera1", 16.50),
+            new EItem(EItemType.Mouse, "Mouse1", 3.50)
+        ));
+
+        double total = BillImpl.getTotal(items);
+
+        assertEquals(64.0, total, 0);
+    }
+
+    @Test
+    public void testGetTotalEmptyList(){
+        List<EItem> items = new ArrayList<EItem>();
+
+        double total =BillImpl.getTotal(items);
+
+        assertEquals(0, total, 0);
+    }
 }

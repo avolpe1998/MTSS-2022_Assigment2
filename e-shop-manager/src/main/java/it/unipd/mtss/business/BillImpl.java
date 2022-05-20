@@ -17,7 +17,10 @@ import it.unipd.mtss.model.User;
 public class BillImpl implements Bill{
     public double getOrderPrice(List<EItem> itemsOrdered, User user) 
         throws BillException{
-        return 0;
+
+        double total = getTotal(itemsOrdered);
+
+        return total;
     }
 
     public static EItem lessExpensiveEItem(List<EItem> items, 
@@ -33,5 +36,15 @@ public class BillImpl implements Bill{
         } 
 
         return cheaperItem.get();
+    }
+
+    public static double getTotal(List<EItem> items) {
+        double total = 0;
+
+        for (EItem item : items) {
+            total += item.getPrice();
+        }
+        
+        return total;
     }
 }
