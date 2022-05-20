@@ -24,7 +24,7 @@ public class BillImplTest {
                 keyboard1 = new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
             ));
 
-        EItem cheaperEItem = bill.lessExpensiveEItem(items);     
+        EItem cheaperEItem = BillImpl.lessExpensiveEItem(items, EItemType.Processor);     
         
         assertEquals(processor3, cheaperEItem);
     }
