@@ -9,9 +9,12 @@ public class EItem {
     private String name;
     private double price;
 
-    EItem(EItemType itemType, String name, double price){
+    public EItem(EItemType itemType, String name, double price) 
+        throws IllegalArgumentException {
         this.itemType = itemType;
         this.name = name;
+
+        if (price < 0) {throw new IllegalArgumentException();}
         this.price = price;
     }
 

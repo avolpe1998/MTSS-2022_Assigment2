@@ -36,4 +36,9 @@ public class EItemTest {
 
         assertEquals(150.50, price, 0);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNegativePrice(){
+        new EItem(EItemType.Processor, "Processore1", -10);
+    }
 }
