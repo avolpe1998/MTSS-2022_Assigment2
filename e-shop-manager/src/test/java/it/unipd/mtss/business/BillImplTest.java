@@ -56,7 +56,8 @@ public class BillImplTest {
     }
 
     @Test(expected = EItemNotFoundException.class)
-    public void testThrowsEItemNotFoundException() throws EItemNotFoundException {
+    public void testLessExpensiveEItemThrowsEItemNotFoundException() 
+        throws EItemNotFoundException {
         EItem processor1, processor2, processor3, motherboard1, keyboard1;
         List<EItem> items = new ArrayList<>(List.of(
                 processor1 = new EItem(EItemType.Processor, "Processore1", 14.50),
@@ -70,7 +71,8 @@ public class BillImplTest {
     }
 
     @Test(expected = EItemNotFoundException.class)
-    public void testThrowsEItemNotFoundExceptionOnEmptyList() throws EItemNotFoundException {
+    public void testLessExpensiveEItemThrowsEItemNotFoundExceptionOnEmptyList() 
+    throws EItemNotFoundException {
         List<EItem> items = new ArrayList<>();
 
         EItem cheaperEItem = BillImpl.lessExpensiveEItem(items, EItemType.Mouse);     
@@ -99,5 +101,36 @@ public class BillImplTest {
         double total = BillImpl.getTotal(items);
 
         assertEquals(0, total, 0);
+    }
+    
+    public void testNumberOfEItem(){
+        EItem processor1, processor2, processor3, motherboard1, keyboard1;
+        List<EItem> items = new ArrayList<>(List.of(
+                processor1 = new EItem(EItemType.Processor, "Processore1", 14.50),
+                motherboard1 = new EItem(EItemType.Motherboard, "Scheda1", 12.50),
+                processor2 = new EItem(EItemType.Processor, "Processore2", 10.50),
+                processor3 = new EItem(EItemType.Processor, "Processore3", 6.50),
+                keyboard1 = new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
+            ));
+
+        int numberOfProcessors = BillImpl.numberOfEItem(items, EItemType.Processor);
+
+        assertEquals(3, numberOfProcessors);
+    }
+
+    @Test
+    public void testEmptyNumberOfEItem(){
+        EItem processor1, processor2, processor3, motherboard1, keyboard1;
+        List<EItem> items = new ArrayList<>(List.of(
+                processor1 = new EItem(EItemType.Processor, "Processore1", 14.50),
+                motherboard1 = new EItem(EItemType.Motherboard, "Scheda1", 12.50),
+                processor2 = new EItem(EItemType.Processor, "Processore2", 10.50),
+                processor3 = new EItem(EItemType.Processor, "Processore3", 6.50),
+                keyboard1 = new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
+            ));
+
+        int numberOfMouses = BillImpl.numberOfEItem(items, EItemType.Mouse);
+
+        assertEquals(0, numberOfMouses);
     }
 }

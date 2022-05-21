@@ -47,4 +47,11 @@ public class BillImpl implements Bill{
         
         return total;
     }
+    
+    public static int numberOfEItem(List<EItem> items, 
+        EItemType eItemType){
+            return (int)items.stream()
+                .filter(item -> item.getItemType() == eItemType)
+                .count();
+    }
 }
