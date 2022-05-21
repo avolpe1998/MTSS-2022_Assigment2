@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import it.unipd.mtss.business.exeption.BillException;
+import it.unipd.mtss.business.exeption.DiscountValueException;
 import it.unipd.mtss.business.exeption.EItemNotFoundException;
 import it.unipd.mtss.model.User;
 import it.unipd.mtss.model.EItem;
@@ -106,5 +107,25 @@ public class BillImplTest {
         double orderPrice = bill.getOrderPrice(items, user);
 
         assertEquals(83.75, orderPrice, 0);
+    }
+
+    @Test
+    public void testApplyDiscount()
+        throws DiscountValueException{
+        double price = 30;
+        double discount = 0.5;
+
+        double dicountedPrice = BillImpl.applyDiscount(price, discount);
+
+        assertEquals(15, dicountedPrice, 0);
+    }
+
+    @Test(expected = DiscountValueException.class)
+    public void testApplyEmptyDiscount()
+        throws DiscountValueException{
+        double price = 30;
+        double discount = -1;
+
+        BillImpl.applyDiscount(price, discount);
     }
 }
