@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unipd.mtss.business.exception.BillException;
-import it.unipd.mtss.business.exception.EItemNotFoundException;
 import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.EItemType;
 import it.unipd.mtss.model.User;
@@ -23,19 +22,14 @@ public class BillImpl implements Bill{
         return total;
     }
 
-    public static EItem lessExpensiveEItem(List<EItem> items, 
-        EItemType eItemType)
-        throws EItemNotFoundException{
+    public static Optional<EItem> lessExpensiveEItem(List<EItem> items, 
+        EItemType eItemType){
         
         Optional<EItem> cheaperItem = items.stream()
             .filter(item -> item.getItemType() == eItemType)
             .min(Comparator.comparing(EItem::getPrice));
-            
-        if(!cheaperItem.isPresent()){
-            throw new EItemNotFoundException();
-        } 
 
-        return cheaperItem.get();
+        return cheaperItem;
     }
 
     public static double getTotal(List<EItem> items) {
