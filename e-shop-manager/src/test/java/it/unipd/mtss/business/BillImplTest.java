@@ -1,9 +1,11 @@
 package it.unipd.mtss.business;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 
@@ -17,7 +19,7 @@ import it.unipd.mtss.model.EItemType;
 public class BillImplTest {
 
     @Test
-    public void testLessExpensiveEItem() throws EItemNotFoundException {
+    public void testLessExpensiveEItem(){
         EItem processor1, processor2, processor3, motherboard1, keyboard1;
         List<EItem> items = new ArrayList<>(List.of(
                 processor1 = new EItem(EItemType.Processor, "Processore1", 14.50),
@@ -27,14 +29,13 @@ public class BillImplTest {
                 keyboard1 = new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
             ));
 
-        EItem cheaperEItem = BillImpl.lessExpensiveEItem(items, EItemType.Processor);     
+        Optional<EItem> cheaperEItem = BillImpl.lessExpensiveEItem(items, EItemType.Processor);     
         
-        assertEquals(processor3, cheaperEItem);
+        assertEquals(processor3, cheaperEItem.get());
     }
 
-    @Test(expected = EItemNotFoundException.class)
-    public void testLessExpensiveEItemThrowsEItemNotFoundException() 
-        throws EItemNotFoundException {
+    @Test
+    public void testLessExpensiveEItemNotFound(){
         EItem processor1, processor2, processor3, motherboard1, keyboard1;
         List<EItem> items = new ArrayList<>(List.of(
                 processor1 = new EItem(EItemType.Processor, "Processore1", 14.50),
@@ -44,15 +45,19 @@ public class BillImplTest {
                 keyboard1 = new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
             ));
 
-        EItem cheaperEItem = BillImpl.lessExpensiveEItem(items, EItemType.Mouse);     
+        Optional<EItem> cheaperEItem = BillImpl.lessExpensiveEItem(items, EItemType.Mouse);   
+        
+        assertFalse(cheaperEItem.isPresent());
     }
 
-    @Test(expected = EItemNotFoundException.class)
-    public void testLessExpensiveEItemThrowsEItemNotFoundExceptionOnEmptyList() 
+    @Test
+    public void testLessExpensiveEItemNotFoundOnEmptyList() 
     throws EItemNotFoundException {
         List<EItem> items = new ArrayList<>();
 
-        EItem cheaperEItem = BillImpl.lessExpensiveEItem(items, EItemType.Mouse);     
+        Optional<EItem> cheaperEItem = BillImpl.lessExpensiveEItem(items, EItemType.Mouse);   
+        
+        assertFalse(cheaperEItem.isPresent());  
     }
 
     @Test

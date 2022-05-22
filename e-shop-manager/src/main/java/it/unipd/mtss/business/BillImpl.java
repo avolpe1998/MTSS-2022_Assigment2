@@ -37,19 +37,14 @@ public class BillImpl implements Bill{
         return total - discount;
     }
 
-    public static EItem lessExpensiveEItem(List<EItem> items, 
-        EItemType eItemType)
-        throws EItemNotFoundException{
+    public static Optional<EItem> lessExpensiveEItem(List<EItem> items, 
+        EItemType eItemType){
         
         Optional<EItem> cheaperItem = items.stream()
             .filter(item -> item.getItemType() == eItemType)
             .min(Comparator.comparing(EItem::getPrice));
-            
-        if(!cheaperItem.isPresent()){
-            throw new EItemNotFoundException();
-        } 
 
-        return cheaperItem.get();
+        return cheaperItem;
     }
 
     public static double getTotal(List<EItem> items) {
