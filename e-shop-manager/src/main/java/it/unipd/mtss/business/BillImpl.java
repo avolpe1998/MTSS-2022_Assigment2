@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import it.unipd.mtss.business.exeption.BillException;
+import it.unipd.mtss.business.exception.BillException;
 import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.EItemType;
 import it.unipd.mtss.model.User;
@@ -47,10 +47,10 @@ public class BillImpl implements Bill{
         for (EItem item : items) {
             total += item.getPrice();
         }
-
+        
         return total;
     }
-
+    
     public static int numberOfEItem(List<EItem> items, 
         EItemType eItemType){
             return (int)items.stream()
