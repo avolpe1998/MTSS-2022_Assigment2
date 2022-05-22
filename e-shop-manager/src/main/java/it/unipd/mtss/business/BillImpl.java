@@ -63,13 +63,9 @@ public class BillImpl implements Bill{
         return price * discount;
     }
 
+    // > 10 mouse (the cheaper one is a gift)
     public double moreThan10Mouse(List<EItem> items) {
-        int count = 0;
-        for (EItem item : items) {
-            if (item.getItemType() == EItemType.Mouse) {
-                count++;
-            }
-        }
+        int count = numberOfEItem(items, EItemType.Mouse);
 
         if (count > 10){
             return lessExpensiveEItem(items, EItemType.Mouse).get().getPrice();
