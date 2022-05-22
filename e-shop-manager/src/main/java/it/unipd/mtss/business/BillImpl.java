@@ -28,7 +28,14 @@ public class BillImpl implements Bill{
             discount += applyDiscount(cheaperProcessorPrice, 0.5);
         }
 
-        return total - discount;
+        total = total - discount;
+
+        // total price < 10 (+2 of commission)
+        if (total < 10) {
+            return total + 2;
+        }
+
+        return total;
     }
 
     public static Optional<EItem> lessExpensiveEItem(List<EItem> items, 
