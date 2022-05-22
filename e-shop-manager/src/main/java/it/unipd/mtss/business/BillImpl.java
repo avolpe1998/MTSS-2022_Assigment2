@@ -24,14 +24,10 @@ public class BillImpl implements Bill{
         
         // > 5 processors (the cheaper one is discounted by 50%)
         if(numberOfEItem(itemsOrdered, EItemType.Processor) > 5){
-            try{
-                double cheaperProcessorPrice = 
-                    lessExpensiveEItem(itemsOrdered, EItemType.Processor)
-                    .getPrice();
-                discount += applyDiscount(cheaperProcessorPrice, 0.5);
-            }catch(EItemNotFoundException e){
-                // unreachable block
-            }
+            double cheaperProcessorPrice = 
+                lessExpensiveEItem(itemsOrdered, EItemType.Processor).get()
+                .getPrice();
+            discount += applyDiscount(cheaperProcessorPrice, 0.5);
         }
 
         return total - discount;
