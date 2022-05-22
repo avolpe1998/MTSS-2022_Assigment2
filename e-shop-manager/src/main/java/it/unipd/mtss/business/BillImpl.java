@@ -17,7 +17,14 @@ import it.unipd.mtss.model.User;
 public class BillImpl implements Bill{
     public double getOrderPrice(List<EItem> itemsOrdered, User user) 
         throws BillException{
-        return 0;
+
+        double total = 0;
+
+        for (EItem item : itemsOrdered) {
+            total += item.getPrice();
+        }
+
+        return total - moreThan10Mouse(itemsOrdered);
     }
 
     public static EItem lessExpensiveEItem(List<EItem> items, 
@@ -33,5 +40,23 @@ public class BillImpl implements Bill{
         } 
 
         return cheaperItem.get();
+    }
+
+    public double moreThan10Mouse(List<EItem> items) {
+        try {
+            int count = 0;
+            for (EItem item : items) {
+                if (item.getItemType() == EItemType.Mouse) {
+                    count++;
+                }
+            }
+
+            if (count > 10){
+                return lessExpensiveEItem(items, EItemType.Mouse).getPrice();
+            }
+        } catch (EItemNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
