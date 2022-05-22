@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import it.unipd.mtss.business.exeption.BillException;
+import it.unipd.mtss.business.exception.BillException;
 import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.EItemType;
 import it.unipd.mtss.model.User;
@@ -16,7 +16,10 @@ import it.unipd.mtss.model.User;
 public class BillImpl implements Bill{
     public double getOrderPrice(List<EItem> itemsOrdered, User user) 
         throws BillException{
-        return 0;
+
+        double total = getTotal(itemsOrdered);
+
+        return total;
     }
 
     public static Optional<EItem> lessExpensiveEItem(List<EItem> items, 
@@ -29,6 +32,16 @@ public class BillImpl implements Bill{
         return cheaperItem;
     }
 
+    public static double getTotal(List<EItem> items) {
+        double total = 0;
+
+        for (EItem item : items) {
+            total += item.getPrice();
+        }
+        
+        return total;
+    }
+    
     public static int numberOfEItem(List<EItem> items, 
         EItemType eItemType){
             return (int)items.stream()
