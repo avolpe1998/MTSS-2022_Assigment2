@@ -16,10 +16,19 @@ import it.unipd.mtss.model.User;
 public class BillImpl implements Bill{
     public double getOrderPrice(List<EItem> itemsOrdered, User user) 
         throws BillException{
-
+        
         double total = getTotal(itemsOrdered);
+        double discount = 0;
+        
+        // > 5 processors (the cheaper one is discounted by 50%) 
+        if(numberOfEItem(itemsOrdered, EItemType.Processor) > 5){
+            double cheaperProcessorPrice = 
+                lessExpensiveEItem(itemsOrdered, EItemType.Processor).get()
+                .getPrice();
+            discount += applyDiscount(cheaperProcessorPrice, 0.5);
+        }
 
-        return total;
+        return total - discount;
     }
 
     public static Optional<EItem> lessExpensiveEItem(List<EItem> items, 
@@ -47,5 +56,10 @@ public class BillImpl implements Bill{
             return (int)items.stream()
                 .filter(item -> item.getItemType() == eItemType)
                 .count();
+    }
+
+    public static double applyDiscount(double price, double discount){
+        
+        return price * discount;
     }
 }
