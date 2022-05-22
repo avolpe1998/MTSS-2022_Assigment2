@@ -17,7 +17,7 @@ import it.unipd.mtss.model.User;
 public class BillImplTest {
 
     @Test
-    public void testGetOrderPrice(){
+    public void testGetOrderPrice() throws BillException{
         BillImpl bill = new BillImpl();
 
         List<EItem> items = new ArrayList<EItem>(List.of( 
@@ -26,18 +26,15 @@ public class BillImplTest {
             new EItem(EItemType.Processor, "Processore2", 10.50),
             new EItem(EItemType.Processor, "Processore3", 6.50),
             new EItem(EItemType.Keyboard, "Tastiera1", 16.50),
-            new EItem(EItemType.Mouse, "Mouse1", 3.50)
+            new EItem(EItemType.Mouse, "Mouse1", 3.50),
+            new EItem(EItemType.Mouse, "Mouse2", 2.50)
         ));
 
         User user = new User(1, "Mario", "Rossi", "1990-05-01");
 
-        try {
-            double price = bill.getOrderPrice(items, user);
+        double price = bill.getOrderPrice(items, user);
 
-            assertEquals(64.0, price, 0);
-        } catch (BillException e) {
-            e.printStackTrace();
-        }
+        assertEquals(66.5, price, 0);
     }
 
     @Test
