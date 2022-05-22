@@ -8,8 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import it.unipd.mtss.business.exeption.BillException;
-import it.unipd.mtss.business.exeption.EItemNotFoundException;
+import it.unipd.mtss.business.exception.BillException;
 import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.EItemType;
 import it.unipd.mtss.model.User;
@@ -17,45 +16,63 @@ import it.unipd.mtss.model.User;
 public class BillImpl implements Bill{
     public double getOrderPrice(List<EItem> itemsOrdered, User user) 
         throws BillException{
-
-        double total = 0;
-
-        for (EItem item : itemsOrdered) {
-            total += item.getPrice();
+        
+        double total = getTotal(itemsOrdered);
+        double discount = 0;
+        
+        // > 5 processors (the cheaper one is discounted by 50%) 
+        if(numberOfEItem(itemsOrdered, EItemType.Processor) > 5){
+            double cheaperProcessorPrice = 
+                lessExpensiveEItem(itemsOrdered, EItemType.Processor).get()
+                .getPrice();
+            discount += applyDiscount(cheaperProcessorPrice, 0.5);
         }
 
-        return total - moreThan10Mouse(itemsOrdered);
+        return total - discount - moreThan10Mouse(itemsOrdered);
     }
 
-    public static EItem lessExpensiveEItem(List<EItem> items, 
-        EItemType eItemType)
-        throws EItemNotFoundException{
+    public static Optional<EItem> lessExpensiveEItem(List<EItem> items, 
+        EItemType eItemType){
         
         Optional<EItem> cheaperItem = items.stream()
             .filter(item -> item.getItemType() == eItemType)
             .min(Comparator.comparing(EItem::getPrice));
-            
-        if(!cheaperItem.isPresent()){
-            throw new EItemNotFoundException();
-        } 
 
-        return cheaperItem.get();
+        return cheaperItem;
+    }
+
+    public static double getTotal(List<EItem> items) {
+        double total = 0;
+
+        for (EItem item : items) {
+            total += item.getPrice();
+        }
+        
+        return total;
+    }
+    
+    public static int numberOfEItem(List<EItem> items, 
+        EItemType eItemType){
+            return (int)items.stream()
+                .filter(item -> item.getItemType() == eItemType)
+                .count();
+    }
+
+    public static double applyDiscount(double price, double discount){
+        
+        return price * discount;
     }
 
     public double moreThan10Mouse(List<EItem> items) {
-        try {
-            int count = 0;
-            for (EItem item : items) {
-                if (item.getItemType() == EItemType.Mouse) {
-                    count++;
-                }
+        int count = 0;
+        for (EItem item : items) {
+            if (item.getItemType() == EItemType.Mouse) {
+                count++;
             }
+        }
 
-            if (count > 10){
-                return lessExpensiveEItem(items, EItemType.Mouse).getPrice();
-            }
-        } catch (EItemNotFoundException e) {
-            e.printStackTrace();
+        if (count > 10){
+            return lessExpensiveEItem(items, EItemType.Mouse).get().getPrice();
         }
         return 0;
     }
