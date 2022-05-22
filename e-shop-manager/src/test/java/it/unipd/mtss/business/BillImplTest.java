@@ -160,4 +160,16 @@ public class BillImplTest {
 
         assertEquals(15, dicountedPrice, 0);
     }
+
+    @Test(expected = BillException.class)
+    public void testGetOrderPriceMoreThan30EItems() throws BillException{
+        BillImpl bill = new BillImpl();
+        User user = new User(1, "Mario", "Rossi", "1985-05-16");
+        List<EItem> items = new ArrayList<>();
+        for(int i = 0; i <= 30; i++){
+            items.add(new EItem(EItemType.Processor, "Processore"+(i+1), i + 5));
+        }
+
+        bill.getOrderPrice(items, user);
+    }
 }

@@ -20,6 +20,10 @@ public class BillImpl implements Bill{
         double total = getTotal(itemsOrdered);
         double discount = 0;
         
+        if(itemsOrdered.size() > 30){
+            throw new BillException();
+        }
+
         // > 5 processors (the cheaper one is discounted by 50%) 
         if(numberOfEItem(itemsOrdered, EItemType.Processor) > 5){
             double cheaperProcessorPrice = 
