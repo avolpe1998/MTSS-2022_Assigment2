@@ -10,7 +10,6 @@ import java.util.Optional;
 import org.junit.Test;
 
 import it.unipd.mtss.business.exeption.BillException;
-import it.unipd.mtss.business.exeption.EItemNotFoundException;
 import it.unipd.mtss.model.User;
 import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.EItemType;
@@ -50,8 +49,7 @@ public class BillImplTest {
     }
 
     @Test
-    public void testLessExpensiveEItemNotFoundOnEmptyList() 
-    throws EItemNotFoundException {
+    public void testLessExpensiveEItemNotFoundOnEmptyList(){
         List<EItem> items = new ArrayList<>();
 
         Optional<EItem> cheaperEItem = BillImpl.lessExpensiveEItem(items, EItemType.Mouse);   
