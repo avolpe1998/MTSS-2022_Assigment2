@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unipd.mtss.business.exeption.BillException;
-import it.unipd.mtss.business.exeption.EItemNotFoundException;
-import it.unipd.mtss.business.exeption.DiscountValueException;
 import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.EItemType;
 import it.unipd.mtss.model.User;
