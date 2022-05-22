@@ -119,13 +119,4 @@ public class BillImplTest {
 
         assertEquals(15, dicountedPrice, 0);
     }
-
-    @Test(expected = DiscountValueException.class)
-    public void testApplyEmptyDiscount()
-        throws DiscountValueException{
-        double price = 30;
-        double discount = -1;
-
-        BillImpl.applyDiscount(price, discount);
-    }
 }

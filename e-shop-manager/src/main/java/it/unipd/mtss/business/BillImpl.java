@@ -31,8 +31,6 @@ public class BillImpl implements Bill{
                 discount += applyDiscount(cheaperProcessorPrice, 0.5);
             }catch(EItemNotFoundException e){
                 // unreachable block
-            }catch(DiscountValueException e){
-                // unreachable block
             }
         }
 
@@ -71,11 +69,7 @@ public class BillImpl implements Bill{
                 .count();
     }
 
-    public static double applyDiscount(double price, double discount)
-        throws DiscountValueException{
-        if(discount < 0){
-            throw new DiscountValueException();
-        }
+    public static double applyDiscount(double price, double discount){
         
         return price * discount;
     }
