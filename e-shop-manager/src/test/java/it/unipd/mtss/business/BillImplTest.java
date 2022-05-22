@@ -112,8 +112,7 @@ public class BillImplTest {
     }
 
     @Test
-    public void testApplyDiscount()
-        throws DiscountValueException{
+    public void testApplyDiscount(){
         double price = 30;
         double discount = 0.5;
 
