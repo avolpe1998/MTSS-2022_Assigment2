@@ -39,13 +39,13 @@ public class BillImplTest {
 
     @Test
     public void testLessExpensiveEItem(){
-        EItem processor1, processor2, processor3, motherboard1, keyboard1;
+        EItem processor3;
         List<EItem> items = new ArrayList<>(List.of(
-                processor1 = new EItem(EItemType.Processor, "Processore1", 14.50),
-                motherboard1 = new EItem(EItemType.Motherboard, "Scheda1", 12.50),
-                processor2 = new EItem(EItemType.Processor, "Processore2", 10.50),
+                new EItem(EItemType.Processor, "Processore1", 14.50),
+                new EItem(EItemType.Motherboard, "Scheda1", 12.50),
+                new EItem(EItemType.Processor, "Processore2", 10.50),
                 processor3 = new EItem(EItemType.Processor, "Processore3", 6.50),
-                keyboard1 = new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
+                new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
             ));
 
         Optional<EItem> cheaperEItem = BillImpl.lessExpensiveEItem(items, EItemType.Processor);     
@@ -55,13 +55,12 @@ public class BillImplTest {
 
     @Test
     public void testLessExpensiveEItemNotFound(){
-        EItem processor1, processor2, processor3, motherboard1, keyboard1;
         List<EItem> items = new ArrayList<>(List.of(
-                processor1 = new EItem(EItemType.Processor, "Processore1", 14.50),
-                motherboard1 = new EItem(EItemType.Motherboard, "Scheda1", 12.50),
-                processor2 = new EItem(EItemType.Processor, "Processore2", 10.50),
-                processor3 = new EItem(EItemType.Processor, "Processore3", 6.50),
-                keyboard1 = new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
+                new EItem(EItemType.Processor, "Processore1", 14.50),
+                new EItem(EItemType.Motherboard, "Scheda1", 12.50),
+                new EItem(EItemType.Processor, "Processore2", 10.50),
+                new EItem(EItemType.Processor, "Processore3", 6.50),
+                new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
             ));
 
         Optional<EItem> cheaperEItem = BillImpl.lessExpensiveEItem(items, EItemType.Mouse);   
@@ -104,13 +103,12 @@ public class BillImplTest {
     }
     
     public void testNumberOfEItem(){
-        EItem processor1, processor2, processor3, motherboard1, keyboard1;
         List<EItem> items = new ArrayList<>(List.of(
-                processor1 = new EItem(EItemType.Processor, "Processore1", 14.50),
-                motherboard1 = new EItem(EItemType.Motherboard, "Scheda1", 12.50),
-                processor2 = new EItem(EItemType.Processor, "Processore2", 10.50),
-                processor3 = new EItem(EItemType.Processor, "Processore3", 6.50),
-                keyboard1 = new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
+                new EItem(EItemType.Processor, "Processore1", 14.50),
+                new EItem(EItemType.Motherboard, "Scheda1", 12.50),
+                new EItem(EItemType.Processor, "Processore2", 10.50),
+                new EItem(EItemType.Processor, "Processore3", 6.50),
+                new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
             ));
 
         int numberOfProcessors = BillImpl.numberOfEItem(items, EItemType.Processor);
@@ -120,13 +118,12 @@ public class BillImplTest {
 
     @Test
     public void testEmptyNumberOfEItem(){
-        EItem processor1, processor2, processor3, motherboard1, keyboard1;
         List<EItem> items = new ArrayList<>(List.of(
-                processor1 = new EItem(EItemType.Processor, "Processore1", 14.50),
-                motherboard1 = new EItem(EItemType.Motherboard, "Scheda1", 12.50),
-                processor2 = new EItem(EItemType.Processor, "Processore2", 10.50),
-                processor3 = new EItem(EItemType.Processor, "Processore3", 6.50),
-                keyboard1 = new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
+                new EItem(EItemType.Processor, "Processore1", 14.50),
+                new EItem(EItemType.Motherboard, "Scheda1", 12.50),
+                new EItem(EItemType.Processor, "Processore2", 10.50),
+                new EItem(EItemType.Processor, "Processore3", 6.50),
+                new EItem(EItemType.Keyboard, "Tastiera1", 16.50)
             ));
 
         int numberOfMouses = BillImpl.numberOfEItem(items, EItemType.Mouse);
@@ -138,17 +135,15 @@ public class BillImplTest {
     public void testGetOrderPrice5Processors() throws BillException {
         BillImpl bill = new BillImpl();
         User user = new User(1, "Mario", "Rossi", "1985-05-16");
-        EItem processor1, processor2, processor3, motherboard1, keyboard1,
-              processor4, processor5, processor6;
         List<EItem> items = new ArrayList<>(List.of(
-                processor1 = new EItem(EItemType.Processor, "Processore1", 14.50),
-                motherboard1 = new EItem(EItemType.Motherboard, "Scheda1", 12.50),
-                processor2 = new EItem(EItemType.Processor, "Processore2", 10.50),
-                processor3 = new EItem(EItemType.Processor, "Processore3", 6.50),
-                keyboard1 = new EItem(EItemType.Keyboard, "Tastiera1", 16.50),
-                processor4 = new EItem(EItemType.Processor, "Processore4", 9.50),
-                processor5 = new EItem(EItemType.Processor, "Processore5", 8.50),
-                processor6 = new EItem(EItemType.Processor, "Processore6", 8.50)
+                new EItem(EItemType.Processor, "Processore1", 14.50),
+                new EItem(EItemType.Motherboard, "Scheda1", 12.50),
+                new EItem(EItemType.Processor, "Processore2", 10.50),
+                new EItem(EItemType.Processor, "Processore3", 6.50),
+                new EItem(EItemType.Keyboard, "Tastiera1", 16.50),
+                new EItem(EItemType.Processor, "Processore4", 9.50),
+                new EItem(EItemType.Processor, "Processore5", 8.50),
+                new EItem(EItemType.Processor, "Processore6", 8.50)
             ));
 
         double orderPrice = bill.getOrderPrice(items, user);
