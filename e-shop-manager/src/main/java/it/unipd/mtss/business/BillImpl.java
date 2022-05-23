@@ -21,7 +21,7 @@ public class BillImpl implements Bill{
         double discount = 0;
         
         if(itemsOrdered.size() > 30){
-            throw new BillException();
+            throw new BillException("Non puoi ordinare piu' di 30 articoli");
         }
 
         // > 5 processors (the cheaper one is discounted by 50%) 
