@@ -232,22 +232,22 @@ public class BillImplTest {
                 new EItem(EItemType.Processor, "Processore2", 10.50),
                 new EItem(EItemType.Processor, "Processore3", 6.50),
                 new EItem(EItemType.Keyboard, "Tastiera1", 16.50),
-                new EItem(EItemType.Mouse, "Mouse1", 3.50),
-                new EItem(EItemType.Mouse, "Mouse2", 5.50),
-                new EItem(EItemType.Mouse, "Mouse3", 8.50),
-                new EItem(EItemType.Mouse, "Mouse4", 4.50),
-                new EItem(EItemType.Mouse, "Mouse5", 2.50),
-                new EItem(EItemType.Mouse, "mouse6", 6.50),
-                new EItem(EItemType.Mouse, "Mouse7", 7.50),
-                new EItem(EItemType.Mouse, "Mouse8", 9.50),
-                new EItem(EItemType.Mouse, "Mouse9", 5.50),
-                new EItem(EItemType.Mouse, "Mouse10", 6.50),
-                new EItem(EItemType.Mouse, "Mouse11", 7.50)
+                new EItem(EItemType.Mouse, "Mouse1", 13.50),
+                new EItem(EItemType.Mouse, "Mouse2", 15.50),
+                new EItem(EItemType.Mouse, "Mouse3", 18.50),
+                new EItem(EItemType.Mouse, "Mouse4", 14.50),
+                new EItem(EItemType.Mouse, "Mouse5", 12.50),
+                new EItem(EItemType.Mouse, "mouse6", 16.50),
+                new EItem(EItemType.Mouse, "Mouse7", 17.50),
+                new EItem(EItemType.Mouse, "Mouse8", 19.50),
+                new EItem(EItemType.Mouse, "Mouse9", 15.50),
+                new EItem(EItemType.Mouse, "Mouse10", 16.50),
+                new EItem(EItemType.Mouse, "Mouse11", 17.50)
         ));
 
         double lowerPrice = bill.moreThan10Mouse(items);
 
-        assertEquals(2.50, lowerPrice, 0);
+        assertEquals(12.50, lowerPrice, 0);
     }
 
     @Test
