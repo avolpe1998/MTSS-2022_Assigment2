@@ -4,6 +4,7 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.mtss.business;
 
+import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,9 @@ import it.unipd.mtss.model.EItemType;
 import it.unipd.mtss.model.User;
 
 public class BillImpl implements Bill{
+    public static int numOrderGifted = 0;
+    public static LocalTime time = LocalTime.of(0, 0);
+
     public double getOrderPrice(List<EItem> itemsOrdered, User user) 
         throws BillException{
         
@@ -54,7 +58,12 @@ public class BillImpl implements Bill{
         if (total < 10) {
             total += 2;
         }
-        
+
+        if(isOrderFree(user)){
+            total = 0;
+            numOrderGifted ++;
+        }
+
         return total;
     }
 
@@ -98,5 +107,22 @@ public class BillImpl implements Bill{
             return lessExpensiveEItem(items, EItemType.Mouse).get().getPrice();
         }
         return 0;
+    }
+
+    public static boolean isOrderFree(User user){
+        if(numOrderGifted >= 10){
+            return false;
+        }
+
+        if(time.compareTo(LocalTime.of(18, 0)) < 0 ||
+           time.compareTo(LocalTime.of(19, 0)) >= 0){
+            return false;
+        }
+
+        if(user.getAge() >= 18){
+            return false;
+        }
+
+        return true;
     }
 }
