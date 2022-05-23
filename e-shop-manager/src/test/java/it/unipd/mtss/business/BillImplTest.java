@@ -161,6 +161,19 @@ public class BillImplTest {
         assertEquals(15, dicountedPrice, 0);
     }
 
+    @Test
+    public void testTotalLessThan10() throws BillException{
+        BillImpl bill = new BillImpl();
+        User user = new User(1, "Mario", "Rossi", "1985-05-16");
+        List<EItem> items = new ArrayList<>(List.of(
+                new EItem(EItemType.Processor, "Processore3", 6.50)
+            ));
+
+        double orderPrice = bill.getOrderPrice(items, user);
+
+        assertEquals(8.50, orderPrice, 0);
+    }
+    
     @Test(expected = BillException.class)
     public void testGetOrderPriceMoreThan30EItems() throws BillException{
         BillImpl bill = new BillImpl();

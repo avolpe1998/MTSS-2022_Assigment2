@@ -49,6 +49,11 @@ public class BillImpl implements Bill{
             discount = applyDiscount(total, 0.1);
             total -= discount;
         }
+
+        // total price < 10 (+2 of commission)
+        if (total < 10) {
+            total += 2;
+        }
         
         return total;
     }
