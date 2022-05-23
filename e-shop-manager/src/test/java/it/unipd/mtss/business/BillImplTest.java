@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import it.unipd.mtss.business.exception.BillException;
@@ -18,10 +19,17 @@ import it.unipd.mtss.model.User;
 
 public class BillImplTest {
 
+    private BillImpl bill;
+    private User user;
+
+    @Before
+    public void beforeTest(){
+        bill = new BillImpl();
+        user = new User(1, "Mario", "Rossi", "1990-05-01");
+    }
+
     @Test
     public void testGetOrderPrice() throws BillException{
-        BillImpl bill = new BillImpl();
-
         List<EItem> items = new ArrayList<EItem>(List.of( 
             new EItem(EItemType.Processor, "Processore1", 14.50),
             new EItem(EItemType.Motherboard, "Scheda1", 12.50),
@@ -31,8 +39,6 @@ public class BillImplTest {
             new EItem(EItemType.Mouse, "Mouse1", 3.50),
             new EItem(EItemType.Mouse, "Mouse2", 2.50)
         ));
-
-        User user = new User(1, "Mario", "Rossi", "1990-05-01");
 
         double price = bill.getOrderPrice(items, user);
 
@@ -135,8 +141,6 @@ public class BillImplTest {
 
     @Test
     public void testGetOrderPrice5Processors() throws BillException {
-        BillImpl bill = new BillImpl();
-        User user = new User(1, "Mario", "Rossi", "1985-05-16");
         List<EItem> items = new ArrayList<>(List.of(
                 new EItem(EItemType.Processor, "Processore1", 14.50),
                 new EItem(EItemType.Motherboard, "Scheda1", 12.50),
@@ -165,8 +169,6 @@ public class BillImplTest {
 
     @Test
     public void testTotalLessThan10() throws BillException{
-        BillImpl bill = new BillImpl();
-        User user = new User(1, "Mario", "Rossi", "1985-05-16");
         List<EItem> items = new ArrayList<>(List.of(
                 new EItem(EItemType.Processor, "Processore3", 6.50)
             ));
@@ -178,8 +180,6 @@ public class BillImplTest {
     
     @Test(expected = BillException.class)
     public void testGetOrderPriceMoreThan30EItems() throws BillException{
-        BillImpl bill = new BillImpl();
-        User user = new User(1, "Mario", "Rossi", "1985-05-16");
         List<EItem> items = new ArrayList<>();
         for(int i = 0; i <= 30; i++){
             items.add(new EItem(EItemType.Processor, "Processore"+(i+1), i + 5));
@@ -190,8 +190,6 @@ public class BillImplTest {
     
     @Test
     public void testTotalGreaterThan1000() throws BillException{
-        BillImpl bill = new BillImpl();
-
         List<EItem> items = new ArrayList<EItem>(List.of( 
             new EItem(EItemType.Processor, "Processore1", 140.50),
             new EItem(EItemType.Motherboard, "Scheda1", 120.50),
@@ -202,17 +200,12 @@ public class BillImplTest {
             new EItem(EItemType.Mouse, "Mouse2", 20.50)
         ));
 
-        User user = new User(1, "Mario", "Rossi", "1990-05-01");
-
         double price = bill.getOrderPrice(items, user);
 
         assertEquals(1056.15, price, 0);
     }
     
     public void testGetOrderPriceMoreThan10Mouse() throws BillException{
-        BillImpl bill = new BillImpl();
-        User user = new User(1, "Mario", "Rossi", "1990-05-01");
-
         List<EItem> items = new ArrayList<>(List.of(
                 new EItem(EItemType.Processor, "Processore1", 14.50),
                 new EItem(EItemType.Motherboard, "Scheda1", 12.50),
@@ -239,8 +232,6 @@ public class BillImplTest {
 
     @Test
     public void testMoreThan10Mouse(){
-        BillImpl bill = new BillImpl();
-
         List<EItem> items = new ArrayList<>(List.of(
                 new EItem(EItemType.Processor, "Processore1", 14.50),
                 new EItem(EItemType.Motherboard, "Scheda1", 12.50),
@@ -267,8 +258,6 @@ public class BillImplTest {
 
     @Test
     public void testNoMoreThan10Mouse(){
-        BillImpl bill = new BillImpl();
-
         List<EItem> items = new ArrayList<>(List.of(
                 new EItem(EItemType.Processor, "Processore1", 14.50),
                 new EItem(EItemType.Motherboard, "Scheda1", 12.50),
@@ -294,8 +283,6 @@ public class BillImplTest {
     
     @Test 
     public void testGetOrderPriceSameMousesAndKeyboards() throws BillException{
-        BillImpl bill = new BillImpl();
-        User user = new User(1, "Mario", "Rossi", "1985-05-16");
         List<EItem> items = new ArrayList<>(List.of(
                 new EItem(EItemType.Processor, "Processore1", 14.50),
                 new EItem(EItemType.Keyboard, "Tastiera1", 12.50),
@@ -313,7 +300,6 @@ public class BillImplTest {
     public void testGetOrderPriceWith10FreeOrdersForUnder18WrongTime() throws BillException{
         BillImpl.numOrderGifted = 0;
         BillImpl.time = LocalTime.of(19,0);
-        BillImpl bill = new BillImpl();
         List<EItem> items1 = new ArrayList<>(List.of(
                 new EItem(EItemType.Processor, "Processore1", 14.50),
                 new EItem(EItemType.Motherboard, "Scheda1", 12.50)
@@ -336,7 +322,6 @@ public class BillImplTest {
     public void testGetOrderPriceWith10FreeOrdersForUnder18() throws BillException{
         BillImpl.numOrderGifted = 0;
         BillImpl.time = LocalTime.of(18,5);
-        BillImpl bill = new BillImpl();
         List<EItem> items1 = new ArrayList<>(List.of(
                 new EItem(EItemType.Processor, "Processore1", 14.50),
                 new EItem(EItemType.Motherboard, "Scheda1", 12.50)
@@ -377,9 +362,9 @@ public class BillImplTest {
     public void testIsOrderFree(){
         BillImpl.numOrderGifted = 0;
         BillImpl.time = LocalTime.of(18,5);
-        User user1 = new User(1, "Lorenzo", "Gialli", "2014-09-16");
+        User user = new User(1, "Lorenzo", "Gialli", "2014-09-16");
 
-        boolean orderFree = BillImpl.isOrderFree(user1);
+        boolean orderFree = BillImpl.isOrderFree(user);
 
         assertTrue(orderFree);
     }
@@ -388,9 +373,9 @@ public class BillImplTest {
     public void testIsOrderFreeTimeWrong(){
         BillImpl.numOrderGifted = 0;
         BillImpl.time = LocalTime.of(19,5);
-        User user1 = new User(1, "Lorenzo", "Gialli", "2014-09-16");
+        User user = new User(1, "Lorenzo", "Gialli", "2014-09-16");
 
-        boolean orderFree = BillImpl.isOrderFree(user1);
+        boolean orderFree = BillImpl.isOrderFree(user);
 
         assertFalse(orderFree);
     }
@@ -399,9 +384,9 @@ public class BillImplTest {
     public void testIsOrderFreeUserNotUnder18(){
         BillImpl.numOrderGifted = 0;
         BillImpl.time = LocalTime.of(18,5);
-        User user1 = new User(1, "Lorenzo", "Gialli", "1985-09-16");
+        User user = new User(1, "Lorenzo", "Gialli", "1985-09-16");
 
-        boolean orderFree = BillImpl.isOrderFree(user1);
+        boolean orderFree = BillImpl.isOrderFree(user);
 
         assertFalse(orderFree);
     }
@@ -410,9 +395,9 @@ public class BillImplTest {
     public void testIsOrderFreeGiftedAlready10Orders(){
         BillImpl.numOrderGifted = 10;
         BillImpl.time = LocalTime.of(18,5);
-        User user1 = new User(1, "Lorenzo", "Gialli", "2014-09-16");
+        User user = new User(1, "Lorenzo", "Gialli", "2014-09-16");
 
-        boolean orderFree = BillImpl.isOrderFree(user1);
+        boolean orderFree = BillImpl.isOrderFree(user);
 
         assertFalse(orderFree);
     }
