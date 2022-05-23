@@ -173,4 +173,137 @@ public class BillImplTest {
 
         assertEquals(8.50, orderPrice, 0);
     }
+    
+    @Test(expected = BillException.class)
+    public void testGetOrderPriceMoreThan30EItems() throws BillException{
+        BillImpl bill = new BillImpl();
+        User user = new User(1, "Mario", "Rossi", "1985-05-16");
+        List<EItem> items = new ArrayList<>();
+        for(int i = 0; i <= 30; i++){
+            items.add(new EItem(EItemType.Processor, "Processore"+(i+1), i + 5));
+        }
+
+        bill.getOrderPrice(items, user);
+    }
+    
+    @Test
+    public void testTotalGreaterThan1000() throws BillException{
+        BillImpl bill = new BillImpl();
+
+        List<EItem> items = new ArrayList<EItem>(List.of( 
+            new EItem(EItemType.Processor, "Processore1", 140.50),
+            new EItem(EItemType.Motherboard, "Scheda1", 120.50),
+            new EItem(EItemType.Processor, "Processore2", 100.50),
+            new EItem(EItemType.Processor, "Processore3", 600.50),
+            new EItem(EItemType.Keyboard, "Tastiera1", 160.50),
+            new EItem(EItemType.Mouse, "Mouse1", 30.50),
+            new EItem(EItemType.Mouse, "Mouse2", 20.50)
+        ));
+
+        User user = new User(1, "Mario", "Rossi", "1990-05-01");
+
+        double price = bill.getOrderPrice(items, user);
+
+        assertEquals(1056.15, price, 0);
+    }
+    
+    public void testGetOrderPriceMoreThan10Mouse() throws BillException{
+        BillImpl bill = new BillImpl();
+        User user = new User(1, "Mario", "Rossi", "1990-05-01");
+
+        List<EItem> items = new ArrayList<>(List.of(
+                new EItem(EItemType.Processor, "Processore1", 14.50),
+                new EItem(EItemType.Motherboard, "Scheda1", 12.50),
+                new EItem(EItemType.Processor, "Processore2", 10.50),
+                new EItem(EItemType.Processor, "Processore3", 6.50),
+                new EItem(EItemType.Keyboard, "Tastiera1", 16.50),
+                new EItem(EItemType.Mouse, "Mouse1", 3.50),
+                new EItem(EItemType.Mouse, "Mouse2", 5.50),
+                new EItem(EItemType.Mouse, "Mouse3", 8.50),
+                new EItem(EItemType.Mouse, "Mouse4", 4.50),
+                new EItem(EItemType.Mouse, "Mouse5", 2.50),
+                new EItem(EItemType.Mouse, "mouse6", 6.50),
+                new EItem(EItemType.Mouse, "Mouse7", 7.50),
+                new EItem(EItemType.Mouse, "Mouse8", 9.50),
+                new EItem(EItemType.Mouse, "Mouse9", 5.50),
+                new EItem(EItemType.Mouse, "Mouse10", 6.50),
+                new EItem(EItemType.Mouse, "Mouse11", 7.50)
+        ));
+
+        double price = bill.getOrderPrice(items, user);
+        
+        assertEquals(125.50, price, 0);
+    }
+
+    @Test
+    public void testMoreThan10Mouse(){
+        BillImpl bill = new BillImpl();
+
+        List<EItem> items = new ArrayList<>(List.of(
+                new EItem(EItemType.Processor, "Processore1", 14.50),
+                new EItem(EItemType.Motherboard, "Scheda1", 12.50),
+                new EItem(EItemType.Processor, "Processore2", 10.50),
+                new EItem(EItemType.Processor, "Processore3", 6.50),
+                new EItem(EItemType.Keyboard, "Tastiera1", 16.50),
+                new EItem(EItemType.Mouse, "Mouse1", 13.50),
+                new EItem(EItemType.Mouse, "Mouse2", 15.50),
+                new EItem(EItemType.Mouse, "Mouse3", 18.50),
+                new EItem(EItemType.Mouse, "Mouse4", 14.50),
+                new EItem(EItemType.Mouse, "Mouse5", 12.50),
+                new EItem(EItemType.Mouse, "mouse6", 16.50),
+                new EItem(EItemType.Mouse, "Mouse7", 17.50),
+                new EItem(EItemType.Mouse, "Mouse8", 19.50),
+                new EItem(EItemType.Mouse, "Mouse9", 15.50),
+                new EItem(EItemType.Mouse, "Mouse10", 16.50),
+                new EItem(EItemType.Mouse, "Mouse11", 17.50)
+        ));
+
+        double lowerPrice = bill.moreThan10Mouse(items);
+
+        assertEquals(12.50, lowerPrice, 0);
+    }
+
+    @Test
+    public void testNoMoreThan10Mouse(){
+        BillImpl bill = new BillImpl();
+
+        List<EItem> items = new ArrayList<>(List.of(
+                new EItem(EItemType.Processor, "Processore1", 14.50),
+                new EItem(EItemType.Motherboard, "Scheda1", 12.50),
+                new EItem(EItemType.Processor, "Processore2", 10.50),
+                new EItem(EItemType.Processor, "Processore3", 6.50),
+                new EItem(EItemType.Keyboard, "Tastiera1", 16.50),
+                new EItem(EItemType.Mouse, "Mouse1", 3.50),
+                new EItem(EItemType.Mouse, "Mouse2", 5.50),
+                new EItem(EItemType.Mouse, "Mouse3", 8.50),
+                new EItem(EItemType.Mouse, "Mouse4", 4.50),
+                new EItem(EItemType.Mouse, "Mouse5", 2.50),
+                new EItem(EItemType.Mouse, "mouse6", 6.50),
+                new EItem(EItemType.Mouse, "Mouse7", 7.50),
+                new EItem(EItemType.Mouse, "Mouse8", 9.50),
+                new EItem(EItemType.Mouse, "Mouse9", 5.50),
+                new EItem(EItemType.Mouse, "Mouse10", 6.50)
+        ));
+
+        double lowerPrice = bill.moreThan10Mouse(items);
+
+        assertEquals(0, lowerPrice, 0);
+    }
+    
+    @Test 
+    public void testGetOrderPriceSameMousesAndKeyboards() throws BillException{
+        BillImpl bill = new BillImpl();
+        User user = new User(1, "Mario", "Rossi", "1985-05-16");
+        List<EItem> items = new ArrayList<>(List.of(
+                new EItem(EItemType.Processor, "Processore1", 14.50),
+                new EItem(EItemType.Keyboard, "Tastiera1", 12.50),
+                new EItem(EItemType.Mouse, "Mouse1", 10.50),
+                new EItem(EItemType.Keyboard, "Tastiera2", 6.50),
+                new EItem(EItemType.Mouse, "Mouse2", 16.50)
+            ));
+
+        double orderPrice = bill.getOrderPrice(items, user);
+
+        assertEquals(54, orderPrice, 0);
+    }
 }
