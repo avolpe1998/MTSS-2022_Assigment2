@@ -35,9 +35,18 @@ public class BillImpl implements Bill{
                     lessExpensiveEItem(itemsOrdered, EItemType.Keyboard).get() 
                     .getPrice();
                 discount += cheaperKeyboardPrice;
-            }
+        }
 
-        return total - discount - moreThan10Mouse(itemsOrdered);
+        // > 10 mouses (the cheaper one is free)
+        total = total - discount - moreThan10Mouse(itemsOrdered);
+
+        // total price > 1000 (10% off)
+        if (total > 1000) {
+            discount = applyDiscount(total, 0.1);
+            total -= discount;
+        }
+        
+        return total;
     }
 
     public static Optional<EItem> lessExpensiveEItem(List<EItem> items, 

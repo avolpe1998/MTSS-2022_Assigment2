@@ -162,6 +162,26 @@ public class BillImplTest {
     }
 
     @Test
+    public void testTotalGreaterThan1000() throws BillException{
+        BillImpl bill = new BillImpl();
+
+        List<EItem> items = new ArrayList<EItem>(List.of( 
+            new EItem(EItemType.Processor, "Processore1", 140.50),
+            new EItem(EItemType.Motherboard, "Scheda1", 120.50),
+            new EItem(EItemType.Processor, "Processore2", 100.50),
+            new EItem(EItemType.Processor, "Processore3", 600.50),
+            new EItem(EItemType.Keyboard, "Tastiera1", 160.50),
+            new EItem(EItemType.Mouse, "Mouse1", 30.50),
+            new EItem(EItemType.Mouse, "Mouse2", 20.50)
+        ));
+
+        User user = new User(1, "Mario", "Rossi", "1990-05-01");
+
+        double price = bill.getOrderPrice(items, user);
+
+        assertEquals(1056.15, price, 0);
+    }
+    
     public void testGetOrderPriceMoreThan10Mouse() throws BillException{
         BillImpl bill = new BillImpl();
         User user = new User(1, "Mario", "Rossi", "1990-05-01");
