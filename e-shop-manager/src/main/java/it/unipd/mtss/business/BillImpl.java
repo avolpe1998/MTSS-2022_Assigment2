@@ -31,8 +31,26 @@ public class BillImpl implements Bill{
                 .getPrice();
             discount += applyDiscount(cheaperProcessorPrice, 0.5);
         }
+        // #mouses == #keyboards (the cheaper keyboard is free)
+        if(numberOfEItem(itemsOrdered, EItemType.Mouse) != 0 &&
+           (numberOfEItem(itemsOrdered,EItemType.Mouse) ==
+            numberOfEItem(itemsOrdered, EItemType.Keyboard))){
+                double cheaperKeyboardPrice = 
+                    lessExpensiveEItem(itemsOrdered, EItemType.Keyboard).get() 
+                    .getPrice();
+                discount += cheaperKeyboardPrice;
+        }
 
-        return total - discount;
+        // > 10 mouses (the cheaper one is free)
+        total = total - discount - moreThan10Mouse(itemsOrdered);
+
+        // total price > 1000 (10% off)
+        if (total > 1000) {
+            discount = applyDiscount(total, 0.1);
+            total -= discount;
+        }
+        
+        return total;
     }
 
     public static Optional<EItem> lessExpensiveEItem(List<EItem> items, 
@@ -65,5 +83,15 @@ public class BillImpl implements Bill{
     public static double applyDiscount(double price, double discount){
         
         return price * discount;
+    }
+
+    // > 10 mouse (the cheaper one is a gift)
+    public double moreThan10Mouse(List<EItem> items) {
+        int count = numberOfEItem(items, EItemType.Mouse);
+
+        if (count > 10){
+            return lessExpensiveEItem(items, EItemType.Mouse).get().getPrice();
+        }
+        return 0;
     }
 }
