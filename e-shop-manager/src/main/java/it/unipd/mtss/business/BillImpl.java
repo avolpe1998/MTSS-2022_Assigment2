@@ -37,7 +37,7 @@ public class BillImpl implements Bill{
                 discount += cheaperKeyboardPrice;
             }
 
-        return total - discount;
+        return total - discount - moreThan10Mouse(itemsOrdered);
     }
 
     public static Optional<EItem> lessExpensiveEItem(List<EItem> items, 
@@ -70,5 +70,15 @@ public class BillImpl implements Bill{
     public static double applyDiscount(double price, double discount){
         
         return price * discount;
+    }
+
+    // > 10 mouse (the cheaper one is a gift)
+    public double moreThan10Mouse(List<EItem> items) {
+        int count = numberOfEItem(items, EItemType.Mouse);
+
+        if (count > 10){
+            return lessExpensiveEItem(items, EItemType.Mouse).get().getPrice();
+        }
+        return 0;
     }
 }
