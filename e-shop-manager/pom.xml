@@ -95,6 +95,26 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>com.github.bordertech.buildtools</groupId>
+        <artifactId>badger</artifactId>
+        <version>1.0.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>badges</goal>
+            </goals>
+            <configuration>
+              <skip>${badges.skip}</skip>
+              <outputDir>target/site/badges</outputDir>
+              <inputFiles>
+                <inputFile>target/checkstyle-result.xml</inputFile>
+              </inputFiles>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.8</version>
