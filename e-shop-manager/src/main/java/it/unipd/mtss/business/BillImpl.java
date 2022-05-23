@@ -27,6 +27,15 @@ public class BillImpl implements Bill{
                 .getPrice();
             discount += applyDiscount(cheaperProcessorPrice, 0.5);
         }
+        // #mouses == #keyboards (the cheaper keyboard is free)
+        if(numberOfEItem(itemsOrdered, EItemType.Mouse) != 0 &&
+           (numberOfEItem(itemsOrdered,EItemType.Mouse) ==
+            numberOfEItem(itemsOrdered, EItemType.Keyboard))){
+                double cheaperKeyboardPrice = 
+                    lessExpensiveEItem(itemsOrdered, EItemType.Keyboard).get() 
+                    .getPrice();
+                discount += cheaperKeyboardPrice;
+            }
 
         return total - discount - moreThan10Mouse(itemsOrdered);
     }

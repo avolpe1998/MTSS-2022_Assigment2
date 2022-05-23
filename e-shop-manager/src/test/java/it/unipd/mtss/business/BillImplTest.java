@@ -244,4 +244,21 @@ public class BillImplTest {
 
         assertEquals(0, lowerPrice, 0);
     }
+    
+    @Test 
+    public void testGetOrderPriceSameMousesAndKeyboards() throws BillException{
+        BillImpl bill = new BillImpl();
+        User user = new User(1, "Mario", "Rossi", "1985-05-16");
+        List<EItem> items = new ArrayList<>(List.of(
+                new EItem(EItemType.Processor, "Processore1", 14.50),
+                new EItem(EItemType.Keyboard, "Tastiera1", 12.50),
+                new EItem(EItemType.Mouse, "Mouse1", 10.50),
+                new EItem(EItemType.Keyboard, "Tastiera2", 6.50),
+                new EItem(EItemType.Mouse, "Mouse2", 16.50)
+            ));
+
+        double orderPrice = bill.getOrderPrice(items, user);
+
+        assertEquals(54, orderPrice, 0);
+    }
 }
