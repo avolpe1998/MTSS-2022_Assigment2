@@ -20,3 +20,5 @@ Per i test è stato seguito il pattern AAA.
 ## Struttura
 
 Il codice di produzione e i test si trovano all'interno della cartella e-shop-manager.
+
+Nel processo di CI con GitHub Actions, ad ogni build viene generato un report dell'analisi statica del plugin Checkstyle in formato .zip, scaricabile nella sezione Actions di GitHub, nel dettaglio della singola build.
