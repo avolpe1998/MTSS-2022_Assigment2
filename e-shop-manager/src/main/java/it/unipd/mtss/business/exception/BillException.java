@@ -5,4 +5,13 @@
 package it.unipd.mtss.business.exception;
 
 public class BillException extends Exception {
+    private String message;
+
+    public BillException(String message){
+        this.message = message;
+    }
+
+    public String getMessage(){
+        return message;
+    }
 }
